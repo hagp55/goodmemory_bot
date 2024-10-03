@@ -13,7 +13,9 @@ SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env.bool("DJANGO_DEBUG")
 
-LANGUAGE_CODE = "en-us"
+AUTH_USER_MODEL = "users.User"
+
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "Europe/Moscow"
 
@@ -42,7 +44,9 @@ THIRD_PARTY_APPS = [
     "rest_framework",
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = [
+    "users",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 

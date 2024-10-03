@@ -24,13 +24,30 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
+python_version = "3.12"
 strict = true
-disable_error_code = ["assignment", "import", "call-arg", "return", "type-arg", "var-annotated", "arg-type"]
-exclude = ["venv", ".venv"]
+check_untyped_defs = true
+ignore_missing_imports = true
+disable_error_code = ["assignment", "call-arg", "return", "type-arg", "var-annotated", "arg-type"]
+exclude = ["venv", ".venv", "manage.py"]
+
+[[tool.mypy.overrides]]
+module = "*.migrations.*"
+ignore_errors = true
+
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py312"
 line-length = 100
+extend-exclude = [
+    "*/migrations/*.py",
+    "staticfiles/*",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
 
 [tool.ruff.lint]
 select = [
