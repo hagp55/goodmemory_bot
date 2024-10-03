@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "goodmemory-bot"
+version = "0.1.0"
+description = ""
+authors = ["Aleksandr Smelik <suntrope55@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.1"
+djangorestframework = "^3.15.2"
+pillow = "^10.4.0"
+django-environ = "^0.11.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.6.8"
+mypy = "^1.11.2"
+pre-commit = "^3.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+strict = true
+disable_error_code = ["assignment", "import", "call-arg", "return", "type-arg", "var-annotated", "arg-type"]
+exclude = ["venv", ".venv"]
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "R",  # Refactor
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+
+ignore = [
+    "B904",  # Allow raising exceptions without from e, for HTTPException
+]
