@@ -25,6 +25,9 @@ app-postgres_logs:
 app-shell:
 	${DC} exec ${APP_CONTAINER} /bin/bash
 
+app-shell_plus:
+	${DC} exec ${APP_CONTAINER} python3 manage.py shell_plus
+
 mypy:
 	${DC} exec -T ${APP_CONTAINER} mypy --explicit-package-bases .
 

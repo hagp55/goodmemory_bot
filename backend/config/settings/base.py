@@ -25,6 +25,12 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = BASE_DIR.parent / "media"
+
+ALLOWED_NUMBER_PHOTO_PER_DAY = 10
+
 ROOT_URLCONF = "config.urls"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -46,6 +52,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "users",
+    "memories",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
