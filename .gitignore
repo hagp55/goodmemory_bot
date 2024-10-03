@@ -152,11 +152,7 @@ typings/
 
 
 ### VisualStudioCode template
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 *.code-workspace
 
 # Local History for devcontainer
@@ -279,3 +275,5 @@ good/media/
 .env
 .envs/*
 !.envs/.local/
+
+db.sqlite3
