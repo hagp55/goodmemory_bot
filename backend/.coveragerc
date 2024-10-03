@@ -1,0 +1,8 @@
+[coverage:run]
+omit =
+    */__init__.py
+    */migrations/*
+    config/*
+    tests/*
+    manage.py
+    admin.py

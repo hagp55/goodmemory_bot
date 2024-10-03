@@ -10,12 +10,16 @@ user = get_user_model()
 
 
 class Memory(models.Model):
-    photo = models.ImageField(upload_to="")
+    photo = models.ImageField(upload_to="", verbose_name="Фотография")
     user = models.ForeignKey(
         user,
         on_delete=models.CASCADE,
+        verbose_name="Пользователь",
     )
-    uploaded_at = models.DateTimeField(auto_now_add=True)
+    uploaded_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата загрузки",
+    )
 
     class Meta:
         verbose_name = "Воспоминание"
@@ -23,7 +27,7 @@ class Memory(models.Model):
         ordering = ("-uploaded_at",)
 
     def __str__(self) -> str:
-        return f"Воспоминание пользователя {self.user.username } | загружено {self.uploaded_at}"
+        return f"Фото {self.user.username } | загружено {self.uploaded_at}"
 
     def clean(self) -> None:
         today = timezone.now().date()

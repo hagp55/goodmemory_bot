@@ -31,6 +31,16 @@ app-shell_plus:
 mypy:
 	${DC} exec -T ${APP_CONTAINER} mypy --explicit-package-bases .
 
+tests:
+	${DC} exec -T ${APP_CONTAINER} pytest -vs
+
+tests-coverage:
+	${DC} exec ${APP_CONTAINER} pytest --cov=. .
+
+tests-coverage-generate-report:
+	${DC} exec ${APP_CONTAINER} pytest --cov=. --cov-report=html --cov-report=term
+
+
 ruff-check:
 	${DC} exec -T ${APP_CONTAINER} ruff check .
 
