@@ -13,7 +13,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env.bool("DJANGO_DEBUG")
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "apps.User"
 
 LANGUAGE_CODE = "ru"
 
@@ -51,8 +51,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "users",
-    "memories",
+    "apps",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
