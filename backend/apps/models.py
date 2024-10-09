@@ -1,22 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.timezone import now, timedelta
+from django.utils import timezone
 
-
-def get_reference_date():
-    return now() - timedelta(days=10)
-
-
-def is_validate_telegram_id(telegram_id: str):
-    if telegram_id.startswith("-"):
-        telegram_id = telegram_id[1:]
-    if not telegram_id.isdigit():
-        raise ValidationError(
-            "%(value)s не корректный телеграм ID",
-            params={"value": telegram_id},
-        )
+from apps.services.prepare_date import get_reference_date
+from apps.validators import is_validate_telegram_id
 
 
 class User(AbstractUser):
@@ -43,7 +31,9 @@ class User(AbstractUser):
     @property
     @admin.display(description="Количество доступных для загрузки воспоминаний")
     def number_memories_available_for_upload(self) -> int:
-        return ((now().date() - self.reference_date.date()).days) - self.total_uploaded_memories
+        return (
+            (timezone.now().date() - self.reference_date.date()).days
+        ) - self.total_uploaded_memories
 
 
 class Memory(models.Model):
