@@ -1,5 +1,5 @@
-from django.utils import timezone
+from django.utils.timezone import datetime, now, timedelta
 
 
-def get_reference_date():
-    return timezone.now() - timezone.timedelta(days=10)
+def get_reference_date() -> datetime:
+    return now() - timedelta(days=10)

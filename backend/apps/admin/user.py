@@ -1,29 +1,29 @@
+from typing import Literal
+
 from django.contrib import admin
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm,
     AdminUserCreationForm,
     UserChangeForm,
 )
-from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from apps.models import Memory, User
+from apps.models import Photo, User
 
 
-class MemoryInline(admin.TabularInline):
-    model = Memory
+class PhotoInline(admin.TabularInline):
+    model = Photo
     verbose_name_plural = "Фотографии"
     extra = 1
-    fields = [
+    fields = (
         "photo",
         "get_preview_photo",
-    ]
-    readonly_fields = [
-        "get_preview_photo",
-    ]
+    )
+    readonly_fields = ("get_preview_photo",)
 
     @admin.display(description="Превью")
-    def get_preview_photo(self, obj):
+    def get_preview_photo(self, obj) -> SafeText | Literal["Фото отсутствует"]:
         if obj.photo:
             return mark_safe(f'<img src="{obj.photo.url}" width="300px">')
         return "Фото отсутствует"
@@ -63,16 +63,16 @@ class UserAdmin(admin.ModelAdmin):
             {"fields": ("last_login", "date_joined", "reference_date")},
         ),
         (
-            _("Information about memories"),
+            _("Information about photos"),
             {
                 "fields": (
-                    "total_uploaded_memories",
-                    "number_memories_available_for_upload",
+                    "total_uploaded_photos",
+                    "number_photos_available_for_upload",
                 )
             },
         ),
     )
-    inlines = (MemoryInline,)
+    inlines = (PhotoInline,)
     add_fieldsets = (
         (
             None,
@@ -93,8 +93,8 @@ class UserAdmin(admin.ModelAdmin):
     )
     readonly_fields = (
         "reference_date",
-        "total_uploaded_memories",
-        "number_memories_available_for_upload",
+        "total_uploaded_photos",
+        "number_photos_available_for_upload",
     )
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("username", "first_name", "last_name", "email")
