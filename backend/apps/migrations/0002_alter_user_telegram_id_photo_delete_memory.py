@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='telegram_id',
-            field=models.CharField(blank=True, help_text='формат телеграм ID: 1234567890 или -1234567890', max_length=20, validators=[apps.validators.is_validate_telegram_id, django.core.validators.MinLengthValidator(7)], verbose_name='Телеграм ID'),
+            field=models.CharField(blank=True, help_text='формат телеграм ID: 1234567890 или -1234567890', max_length=20, validators=[apps.validators.is_valid_telegram_id, django.core.validators.MinLengthValidator(7)], verbose_name='Телеграм ID'),
         ),
         migrations.CreateModel(
             name='Photo',

@@ -4,8 +4,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 django_cache/
-/media/*
-!/media/.gitkeep
+media/*
+!media/.gitkeep
 
 # C extensions
 *.so
