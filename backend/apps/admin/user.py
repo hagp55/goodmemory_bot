@@ -7,9 +7,7 @@ from django.contrib.auth.forms import (
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
-from memories.models import Memory
-
-from .models import User
+from apps.models import Memory, User
 
 
 class MemoryInline(admin.TabularInline):
@@ -37,7 +35,17 @@ class UserAdmin(admin.ModelAdmin):
     change_user_password_template = None
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "telegram_id",
+                )
+            },
+        ),
         (
             _("Permissions"),
             {
@@ -50,7 +58,19 @@ class UserAdmin(admin.ModelAdmin):
                 ),
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (
+            _("Important dates"),
+            {"fields": ("last_login", "date_joined", "reference_date")},
+        ),
+        (
+            _("Information about memories"),
+            {
+                "fields": (
+                    "total_uploaded_memories",
+                    "number_memories_available_for_upload",
+                )
+            },
+        ),
     )
     inlines = (MemoryInline,)
     add_fieldsets = (
@@ -65,7 +85,17 @@ class UserAdmin(admin.ModelAdmin):
     form = UserChangeForm
     add_form = AdminUserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ("username", "email", "first_name", "last_name", "is_staff")
+    list_display = (
+        "username",
+        "email",
+        "telegram_id",
+        "is_staff",
+    )
+    readonly_fields = (
+        "reference_date",
+        "total_uploaded_memories",
+        "number_memories_available_for_upload",
+    )
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("username", "first_name", "last_name", "email")
     ordering = ("username",)

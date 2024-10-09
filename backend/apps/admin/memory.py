@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Memory
+from apps.models import Memory
 
 
-@admin.register(Memory)
 class MemoryAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -34,3 +33,6 @@ class MemoryAdmin(admin.ModelAdmin):
         if obj.photo:
             return mark_safe(f'<img src="{obj.photo.url}" width="800px">')
         return "Фото отсутствует"
+
+
+admin.site.register(Memory)

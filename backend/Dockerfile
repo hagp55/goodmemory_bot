@@ -15,4 +15,6 @@ RUN poetry config virtualenvs.create false \
 
 COPY . /app
 
+RUN chmod +x /app/start.sh
+
 EXPOSE 8000

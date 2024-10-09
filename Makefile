@@ -28,6 +28,12 @@ app-shell:
 app-shell_plus:
 	${DC} exec ${APP_CONTAINER} python3 manage.py shell_plus
 
+app-makemigrations:
+	${DC} exec -T ${APP_CONTAINER} python3 manage.py makemigrations
+
+app-migrate:
+	${DC} exec -T ${APP_CONTAINER} python3 manage.py migrate
+
 mypy:
 	${DC} exec -T ${APP_CONTAINER} mypy --explicit-package-bases .
 
