@@ -14,7 +14,7 @@ from apps.models import Photo, User
 
 class PhotoInline(admin.TabularInline):
     model = Photo
-    verbose_name_plural = "Фотографии"
+    verbose_name_plural = "Галерея"
     extra = 1
     fields = (
         "photo",
@@ -92,7 +92,7 @@ class UserAdmin(admin.ModelAdmin):
         "is_staff",
     )
     readonly_fields = (
-        "reference_date",
+        # "reference_date",
         "total_uploaded_photos",
         "number_photos_available_for_upload",
     )

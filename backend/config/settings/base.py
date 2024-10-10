@@ -29,8 +29,6 @@ MEDIA_URL = "media/"
 
 MEDIA_ROOT = BASE_DIR.parent / "media"
 
-ALLOWED_NUMBER_PHOTO_PER_DAY = 10
-
 ROOT_URLCONF = "config.urls"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

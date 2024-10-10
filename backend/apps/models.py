@@ -1,11 +1,14 @@
+from pathlib import Path
+
 from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.timezone import now
 
-from apps.services.prepare_date import get_reference_date
-from apps.validators import is_valid_telegram_id
+from apps.services.service_for_date import get_reference_date
+from apps.validators import is_validate_telegram_id
 
 
 class User(AbstractUser):
@@ -32,7 +35,7 @@ class User(AbstractUser):
         blank=True,
         verbose_name="Телеграм ID",
         validators=[
-            is_valid_telegram_id,
+            is_validate_telegram_id,
             MinLengthValidator(7),
         ],
         help_text="формат телеграм ID: 1234567890 или -1234567890",
@@ -85,9 +88,13 @@ class Photo(models.Model):
 
     Methods:
         __str__: Returns a string representation of the photo.
+        clean: Validates the photo before saving.
+        save: Saves the photo to the database.
+        delete: Deletes the photo from the database and
+        removes the associated photo file if it exists.
     """
 
-    photo = models.ImageField(upload_to="", verbose_name="Фотография")
+    photo = models.ImageField(upload_to="%Y/%m", verbose_name="Фотография")
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -106,3 +113,38 @@ class Photo(models.Model):
 
     def __str__(self) -> str:
         return f"фотография id: {self.pk} | загружено {self.uploaded_at.date()}"
+
+    def clean(self) -> None:
+        """
+        Validates the photo before saving.
+
+        Raises:
+            ValidationError: If the user has no photos available for upload.
+        """
+        if not bool(self.user.number_photos_available_for_upload):
+            raise ValidationError("Ваш лимит исчерпан, попробуйте завтра")
+
+    def save(self, *args, **kwargs) -> None:
+        """
+        Saves the photo to the database.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs) -> None:
+        """
+        Deletes the photo from the database and removes the associated photo file if it exists.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
+        photo_path = Path(self.photo.path)
+        super().delete(*args, **kwargs)
+
+        if photo_path.exists() and photo_path.is_file():
+            photo_path.unlink()

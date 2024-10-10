@@ -70,4 +70,5 @@ select = [
 
 ignore = [
     "B904",  # Allow raising exceptions without from e, for HTTPException
+    "ARG001", # Unused function argument
 ]
