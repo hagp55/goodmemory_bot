@@ -1,11 +1,7 @@
 from typing import Literal
 
 from django.contrib import admin
-from django.contrib.auth.forms import (
-    AdminPasswordChangeForm,
-    AdminUserCreationForm,
-    UserChangeForm,
-)
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.safestring import SafeText, mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -30,32 +26,23 @@ class PhotoInline(admin.TabularInline):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    add_form_template = "admin/auth/user/add_form.html"
-    change_user_password_template = None
+class UserAdmin(BaseUserAdmin):
+    list_display = (
+        "username",
+        "email",
+        "telegram_id",
+        "is_staff",
+    )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
             _("Personal info"),
-            {
-                "fields": (
-                    "first_name",
-                    "last_name",
-                    "email",
-                    "telegram_id",
-                )
-            },
+            {"fields": ("first_name", "last_name", "email", "telegram_id")},
         ),
         (
             _("Permissions"),
             {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "groups",
-                    "user_permissions",
-                ),
+                "fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions"),
             },
         ),
         (
@@ -64,42 +51,13 @@ class UserAdmin(admin.ModelAdmin):
         ),
         (
             _("Information about photos"),
-            {
-                "fields": (
-                    "total_uploaded_photos",
-                    "number_photos_available_for_upload",
-                )
-            },
+            {"fields": ("total_uploaded_photos", "number_photos_available_for_upload")},
         ),
-    )
-    inlines = (PhotoInline,)
-    add_fieldsets = (
-        (
-            None,
-            {
-                "classes": ("wide",),
-                "fields": ("username", "usable_password", "password1", "password2"),
-            },
-        ),
-    )
-    form = UserChangeForm
-    add_form = AdminUserCreationForm
-    change_password_form = AdminPasswordChangeForm
-    list_display = (
-        "username",
-        "email",
-        "telegram_id",
-        "is_staff",
     )
     readonly_fields = (
         # "reference_date",
         "total_uploaded_photos",
         "number_photos_available_for_upload",
     )
-    list_filter = ("is_staff", "is_superuser", "is_active", "groups")
-    search_fields = ("username", "first_name", "last_name", "email")
-    ordering = ("username",)
-    filter_horizontal = (
-        "groups",
-        "user_permissions",
-    )
+
+    inlines = (PhotoInline,)
