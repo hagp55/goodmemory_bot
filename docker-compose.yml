@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   postgres:
       image: postgres:17
@@ -9,7 +7,7 @@ services:
         POSTGRES_USER: ${DB_USER}
         POSTGRES_PASSWORD: ${DB_PASSWORD}
       ports:
-      - "${DB_PORT}:8000"
+        - "${DB_PORT}:5432"
       volumes:
         - postgres_data:/var/lib/postgresql/data
 
@@ -18,7 +16,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: django
-    command: python3 manage.py runserver 0.0.0.0:${API_PORT}
+    command: >
+      sh -c "sh /app/start.sh && python3 manage.py runserver 0.0.0.0:8000"
     ports:
       - "${API_PORT}:8000"
     volumes:

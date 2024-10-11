@@ -13,7 +13,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env.bool("DJANGO_DEBUG")
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "apps.User"
 
 LANGUAGE_CODE = "ru"
 
@@ -24,6 +24,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
+
+MEDIA_URL = "media/"
+
+MEDIA_ROOT = BASE_DIR.parent / "media"
 
 ROOT_URLCONF = "config.urls"
 
@@ -45,7 +49,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "users",
+    "apps",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

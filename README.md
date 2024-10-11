@@ -4,7 +4,7 @@
 
 ### Clone the project
 ```bash
-   git clone https://github.com/llorenss/goodmemory_bot.git
+   git clone https://github.com/hagp55/goodmemory_bot
 ```
 ### Go to the project directory
 ```bash

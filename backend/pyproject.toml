@@ -18,6 +18,12 @@ psycopg2-binary = "^2.9.9"
 ruff = "^0.6.8"
 mypy = "^1.11.2"
 pre-commit = "^3.8.0"
+django-debug-toolbar = "^4.4.6"
+django-extensions = "^3.2.3"
+ipython = "^8.28.0"
+pytest = "^8.3.3"
+pytest-django = "^4.9.0"
+pytest-cov = "^5.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -64,4 +70,5 @@ select = [
 
 ignore = [
     "B904",  # Allow raising exceptions without from e, for HTTPException
+    "ARG001", # Unused function argument
 ]
