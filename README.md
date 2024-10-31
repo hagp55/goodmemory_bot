@@ -1,4 +1,6 @@
 # goodmemory_bot
+[![tests](https://github.com/hagp55/goodmemory_bot/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/hagp55/goodmemory_bot/actions/workflows/tests.yml)
+[![linter-check](https://github.com/hagp55/goodmemory_bot/actions/workflows/linter-check.yml/badge.svg?branch=main)](https://github.com/hagp55/goodmemory_bot/actions/workflows/linter-check.yml)
 
 ## Installation
 
