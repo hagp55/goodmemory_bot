@@ -2,7 +2,6 @@ name: linter-check
 
 on:
   push:
-    branches: [ "*" ]
 
   pull_request:
       branches: [ "main", "dev" ]
@@ -16,8 +15,10 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
 
-      - name: Setup-python
+      - name: Setup-python3.11
         uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
       - name: Install dependecies
         run: pip install poetry && poetry install
