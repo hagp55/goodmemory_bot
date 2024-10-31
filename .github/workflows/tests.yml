@@ -1,0 +1,31 @@
+name: tests
+
+on:
+  push:
+
+  pull_request:
+      branches: ["main", "dev"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Setup environment variables
+      run: cp .env.example .env
+
+    - name: Build and run Docker Compose
+      run: docker compose up -d --build
+
+    - name: Run tests
+      run: docker compose exec django pytest
+
+    - name: Shut down Docker Compose
+      run: docker compose down

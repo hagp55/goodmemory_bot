@@ -1,0 +1,27 @@
+name: linter-check
+
+on:
+  push:
+
+  pull_request:
+      branches: [ "main", "dev" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Setup-python3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependecies
+        run: cd backend && pip install poetry && poetry install
+
+      - name: run
+        run: cd backend && poetry run ruff check .
