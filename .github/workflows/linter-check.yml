@@ -15,13 +15,13 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v4
 
-      - name: Setup-python3.11
+      - name: Setup-python3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install dependecies
-        run: pip install poetry && poetry install
+        run: cd backend && pip install poetry && poetry install
 
       - name: run
-        run: poetry run ruff check .
+        run: cd backend && poetry run ruff check .
