@@ -1,54 +1,54 @@
-APP_CONTAINER = django
-DB_CONTAINER = postgres
+API_SERVICE = django
+DB_SERVICE = postgres
 DC = docker compose
 EXEC = docker exec -it
 LOGS = docker logs
 
-app:
+up:
 	${DC} up --build -d
 
-app-restart:
+restart:
 	${DC} restart
 
-app-down:
+down:
 	${DC} down
 
-app-logs:
+logs:
 	${DC} logs --follow
 
-app-django_logs:
-	${DC} logs --follow ${APP_CONTAINER}
+django_logs:
+	${DC} logs --follow ${API_SERVICE}
 
-app-postgres_logs:
-	${DC} logs --follow ${DB_CONTAINER}
+postgres_logs:
+	${DC} logs --follow ${DB_SERVICE}
 
-app-shell:
-	${DC} exec ${APP_CONTAINER} /bin/bash
+shell:
+	${DC} exec ${API_SERVICE} /bin/bash
 
-app-shell_plus:
-	${DC} exec ${APP_CONTAINER} python3 manage.py shell_plus
+shell_plus:
+	${DC} exec ${API_SERVICE} python3 manage.py shell_plus
 
-app-makemigrations:
-	${DC} exec -T ${APP_CONTAINER} python3 manage.py makemigrations
+makemigrations:
+	${DC} exec -T ${API_SERVICE} python3 manage.py makemigrations
 
-app-migrate:
-	${DC} exec -T ${APP_CONTAINER} python3 manage.py migrate
+migrate:
+	${DC} exec -T ${API_SERVICE} python3 manage.py migrate
 
 mypy:
-	${DC} exec -T ${APP_CONTAINER} mypy --explicit-package-bases .
+	${DC} exec -T ${API_SERVICE} mypy --explicit-package-bases .
 
 tests:
-	${DC} exec -T ${APP_CONTAINER} pytest -vs
+	${DC} exec -T ${API_SERVICE} pytest -vs
 
 tests-coverage:
-	${DC} exec ${APP_CONTAINER} pytest --cov=. .
+	${DC} exec ${API_SERVICE} pytest --cov=. .
 
 tests-coverage-generate-report:
-	${DC} exec ${APP_CONTAINER} pytest --cov=. --cov-report=html --cov-report=term
+	${DC} exec ${API_SERVICE} pytest --cov=. --cov-report=html --cov-report=term
 
 
 ruff-check:
-	${DC} exec -T ${APP_CONTAINER} ruff check .
+	${DC} exec -T ${API_SERVICE} ruff check .
 
 ruff-fix:
-	${DC} exec -T ${APP_CONTAINER} ruff check . --fix
+	${DC} exec -T ${API_SERVICE} ruff check . --fix
